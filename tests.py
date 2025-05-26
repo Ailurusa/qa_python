@@ -37,14 +37,14 @@ class TestBooksCollector:
         add_genre(book_name, genre)
         assert collector.get_books_with_specific_genre(genre) == [book_name]
 
-    @pytest.mark.parametrize("book_name, genre", [
-        (BOOK, GENRE),
-        ("Шерлок Хомс", "Детективы"),
+    @pytest.mark.parametrize("book_name, genre, expected_result", [
+        (BOOK, GENRE, [BOOK]),
+        ("Шерлок Хомс", "Детективы", []),
     ])
-    def test_get_books_for_children(self, collector, add_book, add_genre, book_name, genre):
+    def test_get_books_for_children(self, collector, add_book, add_genre, book_name, genre, expected_result):
         add_book(book_name)
         add_genre(book_name, genre)
-        assert collector.get_books_for_children() == [BOOK]
+        assert collector.get_books_for_children() == expected_result
 
     def test_add_book_in_favorites(self, collector, add_book):
         add_book(BOOK)
